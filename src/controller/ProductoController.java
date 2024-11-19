@@ -55,7 +55,7 @@ public class ProductoController {
 	
 	//Obtener un producto por ID
 	public Producto getProductoID(int id){
-		String query = "SELECT ID, NOMBRE, PRECIO, CANTIDAD FROM PRODUCTO";
+		String query = "SELECT ID, NOMBRE, PRECIO, CANTIDAD FROM PRODUCTO WHERE ID = " + id;
 		Connection con = ConexionController.getConnection();
 		Producto producto = new Producto();
 		try{
