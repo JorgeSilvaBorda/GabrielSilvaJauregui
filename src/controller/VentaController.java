@@ -148,39 +148,39 @@ public class VentaController {
 				+ "WHERE A.ID = " + id;
 		Venta venta = new Venta();
 		Vendedor vendedor = new Vendedor();
-		
+
 		Connection con = ConexionController.getConnection();
-		try{
+		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(query);
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				venta.setId(rs.getInt("IDVENTA"));
 				venta.setFecha(rs.getDate("FECHA").toLocalDate());
 				venta.setTotal(rs.getInt("TOTALVENTA"));
-				
+
 				vendedor.setId(rs.getInt("IDVENDEEDOR"));
 				vendedor.setRut(rs.getString("RUT"));
 				vendedor.setNombres(rs.getString("NOMBRES"));
 				vendedor.setApPaterno(rs.getString("APPATERNO"));
 				vendedor.setApMaterno(rs.getString("APMATERNO"));
-				
+
 				venta.setVendedor(vendedor);
 			}
-			
+
 			con.close();
 			return venta;
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("No se pudo obtener la venta por ID.");
 			System.out.println(ex);
 			ex.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	//Obtener el listado de ventas
-	public List<Venta> obtenerListadoVentas(){
+	public List<Venta> obtenerListadoVentas() {
 		String query = "SELECT \n"
 				+ "	A.ID IDVENTA,\n"
 				+ "	A.FECHA,\n"
@@ -193,43 +193,43 @@ public class VentaController {
 				+ "FROM\n"
 				+ "	VENTA A INNER JOIN VENDEDOR B\n"
 				+ "	ON A.IDVENDEDOR = B.ID";
-		
+
 		Connection con = ConexionController.getConnection();
 		List<Venta> ventas = new ArrayList();
-		try{
+		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(query);
-			while(rs.next()){
+			while (rs.next()) {
 				Venta venta = new Venta();
 				Vendedor vendedor = new Vendedor();
-				
+
 				vendedor.setId(rs.getInt("IDVENDEDOR"));
 				vendedor.setRut(rs.getString("RUT"));
 				vendedor.setNombres(rs.getString("NOMBRES"));
 				vendedor.setApPaterno(rs.getString("APPATERNO"));
 				vendedor.setApMaterno(rs.getString("APMATERNO"));
-				
+
 				venta.setId(rs.getInt("IDVENTA"));
 				venta.setFecha(rs.getDate("FECHA").toLocalDate());
 				venta.setVendedor(vendedor);
 				venta.setTotal(rs.getInt("TOTALVENTA"));
-				
+
 				ventas.add(venta);
 			}
-			
+
 			con.close();
 			return ventas;
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("No se pudo obtener el listado de ventas.");
 			System.out.println(ex);
 			ex.printStackTrace();
 		}
-		
+
 		return ventas;
 	}
-	
+
 	//Obtener el listado de ventas por ID Vendedor
-	public List<Venta> obtenerListadoVentasIdVendedor(int idVendedor){
+	public List<Venta> obtenerListadoVentasIdVendedor(int idVendedor) {
 		String query = "SELECT \n"
 				+ "	A.ID IDVENTA,\n"
 				+ "	A.FECHA,\n"
@@ -243,38 +243,38 @@ public class VentaController {
 				+ "	VENTA A INNER JOIN VENDEDOR B\n"
 				+ "	ON A.IDVENDEDOR = B.ID "
 				+ "WHERE B.ID = " + idVendedor;
-		
+
 		Connection con = ConexionController.getConnection();
 		List<Venta> ventas = new ArrayList();
-		try{
+		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(query);
-			while(rs.next()){
+			while (rs.next()) {
 				Venta venta = new Venta();
 				Vendedor vendedor = new Vendedor();
-				
+
 				vendedor.setId(rs.getInt("IDVENDEDOR"));
 				vendedor.setRut(rs.getString("RUT"));
 				vendedor.setNombres(rs.getString("NOMBRES"));
 				vendedor.setApPaterno(rs.getString("APPATERNO"));
 				vendedor.setApMaterno(rs.getString("APMATERNO"));
-				
+
 				venta.setId(rs.getInt("IDVENTA"));
 				venta.setFecha(rs.getDate("FECHA").toLocalDate());
 				venta.setVendedor(vendedor);
 				venta.setTotal(rs.getInt("TOTALVENTA"));
-				
+
 				ventas.add(venta);
 			}
-			
+
 			con.close();
 			return ventas;
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("No se pudo obtener el listado de ventas.");
 			System.out.println(ex);
 			ex.printStackTrace();
 		}
-		
+
 		return ventas;
 	}
 }
